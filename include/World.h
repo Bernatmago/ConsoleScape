@@ -12,7 +12,10 @@
 #define ACTION_DROP "drop"
 #define ACTION_INSPECT "isnpect"
 #define ACTION_ITEMS "items"
-#define ACTION_USE "use" //use on other things?
+
+// Item actions
+#define ACTION_USE "use" 
+#define ACTION_TARGET "on"
 
 // Gimmicks
 #define ACTION_BREATHE "breathe"
