@@ -12,10 +12,7 @@ class Creature :
 	public Entity
 {
 public:
-	Creature(string name, string description, CreatureType creatureType, Room* location):Entity(name, description, EntityType::CREATURE){
-		this->creatureType = creatureType;
-		this->location = location;
-	}
+	Creature(string name, string description, CreatureType creatureType, Room* location, Direction position);
 
 	Room* GetLocation() const;
 	CreatureType GetCreatureType() const;
@@ -23,5 +20,6 @@ public:
 protected:
 	CreatureType creatureType;
 	Room* location;
+	Direction position;
 };
 
