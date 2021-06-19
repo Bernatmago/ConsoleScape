@@ -8,7 +8,7 @@ class Exit:
 public:
 	Exit(string name, Direction direction, Room* location, Room* destination, bool locked=false);
 
-	Direction& GetDirection() const;
+	Direction GetDirection() const;
 	Room* GetLocation() const;
 	Room* GetDestination() const;
 

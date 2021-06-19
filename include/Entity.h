@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <list>
+#include <iostream>
 #include "World.h"
 
 using namespace std;
@@ -26,11 +27,10 @@ public:
 
 	void AddEntity(Entity* entity);
 	void RemoveEntity(Entity* entity);
+	list<Entity*> GetContained(const string& name, const EntityType type) const;
 
 	virtual void PrintDescription();
 	virtual void ShowEntities(EntityType type);
-
-	Entity* GetContained(const string& name, const EntityType type) const;
 
 protected:
 	Entity(string name, string description, EntityType type);

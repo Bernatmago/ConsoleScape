@@ -33,6 +33,9 @@ World::World(string playerName)
 	Exit* exitHR = new Exit("cd ./root", Direction::NORTH, home, root);
 	Exit* exitHU = new Exit("cd ./" + playerName, Direction::SOUTH, root, home);
 
+	// Escape exit
+	Exit* end = new Exit("Strange mirror", Direction::WEST, root, nullptr, true);
+
 	// Npc definitions
 	Npc* cortana = new Npc("Cortana", "Your personal assistant", desktop, "How may i help you, " + playerName + "?");
 	Npc* unfinishedProject = new Npc("Unfinished project", user, "Please commit some new code to my repo, it gets lonely here...");

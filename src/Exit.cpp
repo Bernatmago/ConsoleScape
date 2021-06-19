@@ -8,11 +8,11 @@ Exit::Exit(string name, Direction direction, Room* location, Room* destination, 
 	this->locked = locked;
 }
 
-Direction& Exit::GetDirection() const {}
-Room* Exit::GetLocation() const {}
-Room* Exit::GetDestination() const {}
-bool& Exit::Locked() {}
+Direction Exit::GetDirection() const { return direction; }
+Room* Exit::GetLocation() const { return location; }
+Room* Exit::GetDestination() const { return destination; }
+bool& Exit::Locked() { return locked; }
 
 string Exit::ExitDescription(Room* destination) {
-	return "Changes directory to " + destination->GetName();
+	return "Changes working directory to " + destination->GetName();
 }

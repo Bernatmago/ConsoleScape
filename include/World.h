@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <iostream>
 
 #include "Room.h"
 #include "Exit.h"
@@ -44,12 +45,14 @@ public:
 	void GetAction(const vector<string>& words);
 
 private:
+	bool gameOver;
+	Player* player;
+	vector<Entity*> entities;
+
 	bool GameOver() const;
 	void ExecuteAction(const vector<string>& words);
 	string CommonDescription(string dirName, string extraDescription);
 
-	bool gameOver;
-	Player* player;
-	vector<Entity*> entities;
+	
 };
 
