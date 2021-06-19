@@ -10,7 +10,8 @@
 #define ACTION_GO "go"
 #define ACTION_GRAB "grab"
 #define ACTION_DROP "drop"
-#define ACTION_INSPECT "isnpect"
+#define ACTION_TALK "talk"
+#define ACTION_INSPECT "inspect"
 #define ACTION_ITEMS "items"
 
 // Item actions

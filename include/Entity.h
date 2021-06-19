@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <list>
+#include "World.h"
 
 using namespace std;
 
@@ -15,12 +16,9 @@ enum EntityType
 
 class Entity
 {
-public:
-	Entity(string name, string description, EntityType type);
+public:	
 	virtual ~Entity();
-
 	string GetName() const;
-	string GetDescription() const;
 	EntityType GetType() const;
 
 	Entity* GetParent() const;
@@ -32,12 +30,16 @@ public:
 	virtual void PrintDescription();
 	virtual void ShowEntities(EntityType type);
 
+	Entity* GetContained(const string& name, const EntityType type) const;
 
 protected:
+	Entity(string name, string description, EntityType type);
 	string name;
 	string description;
 	EntityType type;
+	// Entity that contains it (if any)
 	Entity* parent;
+	// Entities contained inside that entity (Items on Room, Items on player, etc..)
 	list<Entity*> contains;
 };
 
