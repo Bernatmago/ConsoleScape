@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 
 #include "Room.h"
 #include "Exit.h"
@@ -36,5 +37,19 @@ enum Direction
 
 class World
 {
+public:
+	World(string playerName);
+	~World();
+
+	void GetAction(const vector<string>& words);
+
+private:
+	bool GameOver() const;
+	void ExecuteAction(const vector<string>& words);
+	string CommonDescription(string dirName, string extraDescription);
+
+	bool gameOver;
+	Player* player;
+	vector<Entity*> entities;
 };
 
