@@ -1,6 +1,7 @@
 #pragma once
 
 // Gameplay Actions
+#define ACTION_HELP "help"
 #define ACTION_GO "go"
 #define ACTION_GRAB "grab"
 #define ACTION_DROP "drop"
@@ -12,7 +13,7 @@
 #define ACTION_USE "use" 
 #define ACTION_ITEM_TARGET "on"
 
-// Gimmicks
+// Gimmicks (Not shown on help)
 #define ACTION_BREATHE "breathe"
 #define ACTION_EXIST "exist"
 

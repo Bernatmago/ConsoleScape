@@ -2,15 +2,21 @@
 #include <string>
 #include "include/World.h"
 
+using namespace std;
+
 int main()
 {
 	string input;
 
-    std::cout << "Booting up system!" << endl;
-	std::cout << "Username:" << endl;
-	getline(cin, input);
+    cout << "Booting up system!" << endl;
+	cout << "Username: ";
 
+	getline(cin, input);
 	World world(input);
+
+	cout << "Welcome " << input << ", you can start writting commands (" << ACTION_HELP " to see commands)" << endl;
+
+	
 
 	while (!world.GameOver()) {
 

@@ -66,7 +66,6 @@ void World::GetActionString(string input) {
 }
 
 vector<string> World::ParseActionString(string actionString) {
-
 	istringstream iss(actionString);
 	vector<string> tokens{ istream_iterator<string>{iss}, istream_iterator<string>{} };
 	return tokens;
@@ -78,7 +77,9 @@ void World::ProcessAction(const vector<string>& tokens) {
 	if (tokens.size() > 1)
 		actionTarget = tokens.at(1);
 
-	if (baseAction == ACTION_GO)
+	if (baseAction == ACTION_HELP)
+		ShowActions();
+	else if (baseAction == ACTION_GO)
 		player->Go(actionTarget);
 	else if (baseAction == ACTION_GRAB)
 		player->Grab(actionTarget);
@@ -102,8 +103,10 @@ void World::ProcessAction(const vector<string>& tokens) {
 		player->Breathe();
 	else if (baseAction == ACTION_EXIST)
 		player->Go(actionTarget);
-	else if (baseAction == ACTION_SURRENDER)
-		player->Go(actionTarget);
+	else if (baseAction == ACTION_SURRENDER) {
+		gameOver = true;
+		cout << "You have forfeited, better luck next time <3" << endl;
+	}		
 	else
 		cout << "Could not parse action, try again" << endl;
 }
@@ -112,3 +115,21 @@ string World::CommonDescription(string dirName, string extraDescription) {
 	return "This is the " + dirName + " directory, here you can find " + extraDescription + ".";
 }
 
+void World::ShowActions() {
+	cout << "Commands:" << endl;
+	// Gameplay Actions
+	cout << "- " << ACTION_GO << ":" << endl;
+	cout << "- " << ACTION_GRAB << ":" << endl;
+	cout << "- " << ACTION_DROP << ":" << endl;
+	cout << "- " << ACTION_TALK << ":" << endl;
+	cout << "- " << ACTION_INSPECT << ":" << endl;
+	cout << "- " << ACTION_ITEMS << ":" << endl;
+	
+	// Item actions
+	cout << "- " << ACTION_USE<< " <item>:" << endl;
+	cout << "- " << ACTION_USE << " <item> " ACTION_ITEM_TARGET " <target>:" << endl;
+
+
+// Game Control Actions
+#define ACTION_SURRENDER 
+}

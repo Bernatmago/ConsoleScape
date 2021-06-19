@@ -14,5 +14,7 @@ Room* Exit::GetDestination() const { return destination; }
 bool& Exit::Locked() { return locked; }
 
 string Exit::ExitDescription(Room* destination) {
-	return "Changes working directory to " + destination->GetName();
+	if (destination != nullptr)
+		return "Changes working directory to " + destination->GetName();
+	return "Goes to an unknown place";
 }
