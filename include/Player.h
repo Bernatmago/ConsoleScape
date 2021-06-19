@@ -2,6 +2,7 @@
 #include <string>
 #include "GameCommons.h"
 #include "Creature.h"
+#include "Exit.h"
 
 using namespace std;
 

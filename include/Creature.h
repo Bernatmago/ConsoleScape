@@ -1,6 +1,5 @@
 #pragma once
 #include "GameCommons.h"
-#include "World.h"
 #include "Entity.h"
 #include "Room.h"
 

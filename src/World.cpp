@@ -31,7 +31,7 @@ World::World(string playerName)
 	Exit* exitHU = new Exit("cd ./" + playerName, Direction::SOUTH, home, user);
 
 	Exit* exitHR = new Exit("cd ./root", Direction::NORTH, home, root);
-	Exit* exitHU = new Exit("cd ./" + playerName, Direction::SOUTH, root, home);
+	Exit* exitRH = new Exit("cd ./" + playerName, Direction::SOUTH, root, home);
 
 	// Escape exit
 	Exit* end = new Exit("Strange mirror", Direction::WEST, root, nullptr, true);
@@ -91,7 +91,7 @@ void World::ProcessAction(const vector<string>& tokens) {
 	else if (baseAction == ACTION_ITEMS)
 		player->ShowItems();
 	else if (baseAction == ACTION_USE) {
-		if (tokens.size > 3 && tokens.at(2) == ACTION_ITEM_TARGET)
+		if (tokens.size() > 3 && tokens.at(2) == ACTION_ITEM_TARGET)
 			// Use item on target
 			player->UseItem(actionTarget, tokens.at(3));
 		else

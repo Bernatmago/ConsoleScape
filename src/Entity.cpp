@@ -13,7 +13,7 @@ Entity::~Entity()
 {
 	for (Entity* e : contains)
 		delete e;
-	contains.clear;
+	contains.clear();
 }
 
 
@@ -36,7 +36,7 @@ void Entity::PrintDescription() { cout << description << endl; }
 void Entity::ShowEntities(EntityType type) {
 	for (Entity* e : contains) {
 		if (type == e->GetType()) {
-			cout << "** " << e->GetName << endl;
+			cout << "** " << e->GetName() << endl;
 		}
 	}
 }
