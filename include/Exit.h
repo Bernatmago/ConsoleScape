@@ -6,7 +6,7 @@ class Exit:
 	public Entity
 {
 public:
-	Exit(string name, string description, Direction direction, Room* location, Room* destination, bool locked);
+	Exit(string name, Direction direction, Room* location, Room* destination, bool locked=false);
 
 	Direction& GetDirection() const;
 	Room* GetLocation() const;
@@ -19,5 +19,7 @@ private:
 	Room* location;
 	Room* destination;
 	bool locked;
+
+	string ExitDescription(Room* destination);
 };
 

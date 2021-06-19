@@ -12,7 +12,7 @@ class Creature :
 	public Entity
 {
 public:
-	Creature(string name, string description, CreatureType creatureType, Room* location, Direction position);
+	Creature(string name, string description, CreatureType creatureType, Room* location);
 
 	Room* GetLocation() const;
 	CreatureType GetCreatureType() const;
