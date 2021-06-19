@@ -18,6 +18,7 @@ public:
 	void Drop(const string& itemName);
 	void Talk(const string& entityName);
 	void Inspect(const string& entityName);
+	void UseItem(const string& itemName);
 	void UseItem(const string& itemName, const string& targetEntityName);
 
 protected:

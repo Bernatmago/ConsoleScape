@@ -38,7 +38,7 @@ World::World(string playerName)
 
 	// Npc definitions
 	Npc* cortana = new Npc("Cortana", "Your personal assistant", desktop, "How may i help you, " + playerName + "?");
-	Npc* unfinishedProject = new Npc("Unfinished project", user, "Please commit some new code to my repo, it gets lonely here...");
+	Npc* unfinishedProject = new Npc("Unfinished project", "It has some python 2.7 code", user, "Please commit some new code to my repo, it gets lonely here...");
 	Npc* os = new Npc("OS", "The one who rules this game", root, "You shall not pass! (Unless you have the one command to rule them all)");
 
 	// Item definitions
@@ -57,6 +57,64 @@ World::World(string playerName)
 	
 }
 
+
+bool World::GameOver() const { return gameOver; }
+
+void World::GetActionString(string input) {
+	vector<string> processedInput = ParseActionString(input);
+	ProcessAction(processedInput);
+}
+
+vector<string> World::ParseActionString(string actionString) {
+
+	istringstream iss(actionString);
+	vector<string> tokens{ istream_iterator<string>{iss}, istream_iterator<string>{} };
+	return tokens;
+}
+
+void World::ProcessAction(const vector<string>& tokens) {
+	string baseAction = tokens.front();
+	string actionTarget = NULL;
+	if (tokens.size() > 1)
+		actionTarget = tokens.at(1);
+
+	if (baseAction == ACTION_GO)
+		player->Go(actionTarget);
+	else if (baseAction == ACTION_GRAB)
+		player->Go(actionTarget);
+	else if (baseAction == ACTION_DROP)
+		player->Go(actionTarget);
+	else if (baseAction == ACTION_TALK)
+		player->Go(actionTarget);
+	else if (baseAction == ACTION_INSPECT)
+		player->Go(actionTarget);
+	else if (baseAction == ACTION_ITEMS)
+		player->Go(actionTarget);
+	else if (baseAction == ACTION_USE) {
+		if (tokens.size > 3 && tokens.at(2) == ACTION_ITEM_TARGET)
+			// Use item on target
+			player->Go(actionTarget);
+		else
+			// Use item no target
+			player->Go(actionTarget);
+	}
+	else if (baseAction == ACTION_BREATHE)
+		player->Go(actionTarget);
+	else if (baseAction == ACTION_EXIST)
+		player->Go(actionTarget);
+	else if (baseAction == ACTION_SURRENDER)
+		player->Go(actionTarget);
+	else
+		cout << "Could not parse action, try again" << endl;
+
+
+
+
+
+
+}
+
 string World::CommonDescription(string dirName, string extraDescription) {
 	return "This is the " + dirName + " directory, here you can find " + extraDescription + ".";
 }
+

@@ -1,6 +1,9 @@
 #pragma once
 #include <vector>
 #include <iostream>
+#include <sstream>
+#include <iterator>
+
 
 #include "Room.h"
 #include "Exit.h"
@@ -18,7 +21,7 @@
 
 // Item actions
 #define ACTION_USE "use" 
-#define ACTION_TARGET "on"
+#define ACTION_ITEM_TARGET "on"
 
 // Gimmicks
 #define ACTION_BREATHE "breathe"
@@ -40,17 +43,19 @@ class World
 {
 public:
 	World(string playerName);
+	// TODO: implement destructor
 	~World();
 
-	void GetAction(const vector<string>& words);
+	void GetActionString(string input);
+	bool GameOver() const;
 
 private:
 	bool gameOver;
 	Player* player;
 	vector<Entity*> entities;
 
-	bool GameOver() const;
-	void ExecuteAction(const vector<string>& words);
+	vector<string> ParseActionString(string actionString);
+	void ProcessAction(const vector<string>& tokens);
 	string CommonDescription(string dirName, string extraDescription);
 
 	
