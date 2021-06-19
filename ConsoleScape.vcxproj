@@ -168,12 +168,16 @@
   <ItemGroup>
     <ClInclude Include="include\Creature.h" />
     <ClInclude Include="include\Exit.h" />
+    <ClInclude Include="include\GameCommons.h" />
     <ClInclude Include="include\Item.h" />
     <ClInclude Include="include\Npc.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\Room.h" />
     <ClInclude Include="include\Entity.h" />
     <ClInclude Include="include\World.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ConsoleScape.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

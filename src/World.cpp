@@ -74,44 +74,38 @@ vector<string> World::ParseActionString(string actionString) {
 
 void World::ProcessAction(const vector<string>& tokens) {
 	string baseAction = tokens.front();
-	string actionTarget = NULL;
+	string actionTarget = "";
 	if (tokens.size() > 1)
 		actionTarget = tokens.at(1);
 
 	if (baseAction == ACTION_GO)
 		player->Go(actionTarget);
 	else if (baseAction == ACTION_GRAB)
-		player->Go(actionTarget);
+		player->Grab(actionTarget);
 	else if (baseAction == ACTION_DROP)
-		player->Go(actionTarget);
+		player->Drop(actionTarget);
 	else if (baseAction == ACTION_TALK)
-		player->Go(actionTarget);
+		player->Talk(actionTarget);
 	else if (baseAction == ACTION_INSPECT)
-		player->Go(actionTarget);
+		player->Inspect(actionTarget);
 	else if (baseAction == ACTION_ITEMS)
-		player->Go(actionTarget);
+		player->ShowItems();
 	else if (baseAction == ACTION_USE) {
 		if (tokens.size > 3 && tokens.at(2) == ACTION_ITEM_TARGET)
 			// Use item on target
-			player->Go(actionTarget);
+			player->UseItem(actionTarget, tokens.at(3));
 		else
 			// Use item no target
-			player->Go(actionTarget);
+			player->UseItem(actionTarget);
 	}
 	else if (baseAction == ACTION_BREATHE)
-		player->Go(actionTarget);
+		player->Breathe();
 	else if (baseAction == ACTION_EXIST)
 		player->Go(actionTarget);
 	else if (baseAction == ACTION_SURRENDER)
 		player->Go(actionTarget);
 	else
 		cout << "Could not parse action, try again" << endl;
-
-
-
-
-
-
 }
 
 string World::CommonDescription(string dirName, string extraDescription) {

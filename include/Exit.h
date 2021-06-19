@@ -1,12 +1,14 @@
 #pragma once
-#include "Entity.h"
+#include "GameCommons.h"
+#include "Room.h"
 
+using namespace std;
 
 class Exit:
 	public Entity
 {
 public:
-	Exit(string name, Direction direction, Room* location, Room* destination, bool locked=false);
+	Exit(string name, Direction direction, Room* location, Room* destination, bool locked = false);
 
 	Direction GetDirection() const;
 	Room* GetLocation() const;

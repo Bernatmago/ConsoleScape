@@ -1,12 +1,10 @@
 #pragma once
+#include "GameCommons.h"
+#include "World.h"
 #include "Entity.h"
 #include "Room.h"
 
-enum CreatureType
-{
-	NPC,
-	PLAYER
-};
+using namespace std;
 
 class Creature :
 	public Entity
@@ -20,6 +18,5 @@ public:
 protected:
 	CreatureType creatureType;
 	Room* location;
-	Direction position;
 };
 

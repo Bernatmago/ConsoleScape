@@ -2,22 +2,22 @@
 #include <string>
 #include <list>
 #include <iostream>
-#include "World.h"
 
 using namespace std;
 
-enum EntityType
+enum class EntityType
 {
 	//ENTITY,
 	ROOM,
 	EXIT,
 	ITEM,
-	CREATURE	
+	CREATURE
 };
 
 class Entity
 {
-public:	
+public:
+	Entity(string name, string description, EntityType type);
 	virtual ~Entity();
 	string GetName() const;
 	EntityType GetType() const;
@@ -33,7 +33,6 @@ public:
 	virtual void ShowEntities(EntityType type);
 
 protected:
-	Entity(string name, string description, EntityType type);
 	string name;
 	string description;
 	EntityType type;

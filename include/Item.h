@@ -1,5 +1,7 @@
 #pragma once
-#include "entity.h"
+#include "Entity.h"
+
+using namespace std;
 
 class Item :
 	public Entity

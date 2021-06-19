@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.h"
 
+using namespace std;
 
 class Room :
 	public Entity

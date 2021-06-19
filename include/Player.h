@@ -1,7 +1,9 @@
 #pragma once
-#include "World.h"
+#include <string>
+#include "GameCommons.h"
 #include "Creature.h"
 
+using namespace std;
 
 class Player :
 	public Creature
@@ -21,8 +23,12 @@ public:
 	void UseItem(const string& itemName);
 	void UseItem(const string& itemName, const string& targetEntityName);
 
+	// Gimmicks (No real use)
+	void Breathe();
+	void Exist();
+
 protected:
-	template <class EntitySubclass>
-	EntitySubclass* GetEntityFromTarget(const string& name, const Entity* target, const EntityType type) const;
+	template <class EntityType>
+	EntityType* GetEntityFromTarget(const string& name, const Entity* target, const EntityType type) const;
 	Exit* GetExitFromDirection(const Direction& dir) const;
 };

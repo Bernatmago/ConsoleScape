@@ -1,7 +1,11 @@
 #include "../include/Player.h"
 
-void ShowItems();
-void DescribeCurrentRoom();
+void Player::ShowItems() {
+
+}
+void Player::DescribeCurrentRoom() {
+
+}
 
 
 void Player::Go(const string& roomName) {
@@ -20,6 +24,6 @@ void Player::UseItem(const string& itemName) {
 void Player::UseItem(const string& itemName, const string& targetEntityName) {
 }
 
-template <class EntitySubclass>
-EntitySubclass* Player::GetEntityFromTarget(const string& name, const Entity* target, const EntityType type) const {}
+template <class EntityType>
+EntityType* Player::GetEntityFromTarget(const string& name, const Entity* target, const EntityType type) const {}
 Exit* Player::GetExitFromDirection(const Direction& dir) const {}
