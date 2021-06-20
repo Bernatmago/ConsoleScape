@@ -33,20 +33,28 @@ void Player::DescribeCurrentRoom() {
 
 void Player::Go(const string& directionString) {
 	Direction* direction = ParseDirection(directionString);
-	if (CanMove()) {
-		Exit* exit = GetExitFromDirection(direction);
-		if (exit != nullptr) {
-			if (!exit->Locked()) {
-				location = exit->GetDestination();
-				if (location != nullptr)
-					location->Describe();
+	if (direction != nullptr) {
+		if (CanMove()) {
+			Exit* exit = GetExitFromDirection(direction);
+			if (exit != nullptr) {
+				if (!exit->Locked()) {
+					location = exit->GetDestination();
+					if (location != nullptr)
+						location->Describe();
+				}
+				else {
+					cout << "You dont have permissions to access this directory" << endl;
+				}
 			}
+			else
+				cout << "No directory found in this direction" << endl;
 		}
 		else
-			cout << "No directory found in this direction" << endl;
+			cout << "You dont have permission to move" << endl;
 	}
 	else
-		cout << "You dont have permission to move" << endl;
+		cout << "Specify a valid direction" << endl;
+	
 }
 void Player::Grab(const string& itemName) {
 	Item* item = GetEntityFromTarget<Item>(itemName, location, EntityType::ITEM);
@@ -69,7 +77,7 @@ void Player::Drop(const string& itemName) {
 		cout << "You dont have this item" << endl;
 }
 void Player::Talk(const string& entityName) {
-	Npc* npc = GetEntityFromTarget<Npc>(entityName, this, EntityType::CREATURE);
+	Npc* npc = GetEntityFromTarget<Npc>(entityName, location, EntityType::CREATURE);
 	if (npc != nullptr)
 		npc->PrintResponse();
 	else
@@ -104,13 +112,14 @@ void Player::UseItem(const string& itemName) {
 			cout << "You have gained the ability of changing directories!" << endl;
 			MakeMoveable();
 		}			
-		if (itemName == "sudo") {
+		else if (itemName == "sudo") {
 			cout << "[WARNING] Admin permissions have been granted, proceed with caution!" << endl;
 			MakeAdmin();
 		}
-		if (itemName == "forkbomb") {
+		else if (itemName == "forkbomb") {
 			if (location->GetName() == "root") {
 				cout << "System destruction initialized, you have won the game!" << endl;
+				location = nullptr;
 			}
 			else
 				cout << "You need to be near the os for this exploit to take effect" << endl;
@@ -128,6 +137,7 @@ void Player::Unlock(const string& directionString) {
 	if (exit != nullptr) {
 		// Password doors
 		if (exit->GetName() == "home") {
+			cout << "Please input the correct password" << endl;
 			string password = "";
 			cin >> password;
 			if (password == "1234") {
@@ -143,7 +153,7 @@ void Player::Unlock(const string& directionString) {
 		if (key != nullptr) {
 			if (exit->Locked()) {
 				exit->Unlock();
-				cout << "Access permission granted" << endl;
+				cout << "Access permission granted!" << endl;
 			}
 			else
 				cout << "Exit already unlocked" << endl;
@@ -152,7 +162,7 @@ void Player::Unlock(const string& directionString) {
 			cout << "You dont have the admin key" << endl;		
 	}
 	else
-		cout << "Exit not found" << endl;
+		cout << "Exit not found in this direction" << endl;
 
 }
 

@@ -22,6 +22,7 @@ public:
 	//~World();
 
 	void GetActionString(string input);
+	void ProcessWinCondition();
 	bool GameOver() const;
 
 private:
@@ -31,6 +32,7 @@ private:
 
 	vector<string> ParseActionString(string actionString);
 	void ProcessAction(const vector<string>& tokens);
+
 	string CommonDescription(string dirName, string extraDescription);
 	void ShowActions();	
 };

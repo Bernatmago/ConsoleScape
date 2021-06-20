@@ -4,6 +4,4 @@ Room::Room(string name, string description): Entity(name, description, EntityTyp
 
 void Room :: Describe() {
 	cout << "Current directory: " << GetName() << endl;
-	cout << "Items:" << endl;
-	cout << "Npcs:" << endl;
 }

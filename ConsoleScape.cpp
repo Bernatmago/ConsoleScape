@@ -14,15 +14,14 @@ int main()
 	getline(cin, input);
 	World world(input);
 
-	cout << "Welcome " << input << ", you can start writting commands (" << ACTION_HELP " to see commands)" << endl;
-
-	
+	cout << "Welcome " << input << ", you can start writting commands (" << ACTION_HELP " to see commands)" << endl;	
 
 	while (!world.GameOver()) {
-
 		getline(cin, input);
-
 		world.GetActionString(input);
-		
+		world.ProcessWinCondition();
 	}
+
+	cout << "Press ENTER to close the game" << endl;
+	cin.get();
 }

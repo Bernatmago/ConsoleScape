@@ -6,21 +6,21 @@ World::World(string playerName)
 
 	// Room definitions
 	//Starting room
-	Room* desktop = new Room("/home/" + playerName + "/desktop", CommonDescription("desktop", "your applications"));
+	Room* desktop = new Room("root/home/" + playerName + "/desktop", CommonDescription("desktop", "Your applications"));
 	entities.push_back(desktop);
 	//Second Room
-	Room* user = new Room("/home/" + playerName, CommonDescription("user", "your files"));
+	Room* user = new Room("root/home/" + playerName, CommonDescription("user", "Your files"));
 	entities.push_back(user);
 	// Sub-rooms
-	Room* pictures = new Room("/home/" + playerName + "/pictures", CommonDescription("user", "safe for work pictures"));
+	Room* pictures = new Room("root/home/" + playerName + "/pictures", CommonDescription("user", "Safe for work pictures"));
 	entities.push_back(pictures);
-	Room* music = new Room("/home/" + playerName + "/music", CommonDescription("user", "some sick beats"));
+	Room* music = new Room("root/home/" + playerName + "/music", CommonDescription("user", "Some sick beats"));
 	entities.push_back(desktop);
 	// Third Room
-	Room* home = new Room("/home", CommonDescription("home", "other users data"));
+	Room* home = new Room("root/home", CommonDescription("home", "Other users data"));
 	entities.push_back(home);
 	// Fourth Room
-	Room* root = new Room("root", CommonDescription("root", "powerful commands"));
+	Room* root = new Room("root", CommonDescription("root", "Powerful commands"));
 	entities.push_back(root);
 
 	// Room connections (unlocked by default)
@@ -39,7 +39,7 @@ World::World(string playerName)
 	Exit* exitMU = new Exit(playerName, Direction::WEST, music, user);
 	music->AddEntity(exitMU);
 
-	Exit* exitUH = new Exit("home", Direction::NORTH, user, home);
+	Exit* exitUH = new Exit("home", Direction::NORTH, user, home, true);
 	user->AddEntity(exitUH);
 	Exit* exitHU = new Exit(playerName, Direction::SOUTH, home, user);
 	home->AddEntity(exitHU);
@@ -49,22 +49,28 @@ World::World(string playerName)
 	Exit* exitRH = new Exit("login", Direction::SOUTH, root, home);
 	root->AddEntity(exitRH);
 
+	// Cannot be unlockd, just for the inspect
+	Exit* outsideWorld = new Exit("?¿?¿ The real world ?¿?¿", Direction::EAST, root, nullptr, true);
+	root->AddEntity(outsideWorld);
+
 	// Npc definitions
 	Npc* cortana = new Npc("Cortana", "Your personal assistant", desktop, "How may i help you, " + playerName + "?");
 	desktop->AddEntity(cortana);
 	Npc* zork = new Npc("Zork", "A well known text based game", desktop, "I am your father, literally!");
 	desktop->AddEntity(zork);
-	Npc* unfinishedProject = new Npc("Unfinished project", "It has some python 2.7 code", user, "I have merge conflicts, please fix them...");
+	Npc* unfinishedProject = new Npc("Project", "It has some python 2.7 code", user, "I have merge conflicts, please fix them...");
 	user->AddEntity(unfinishedProject);
+	Npc* guestUser = new Npc("guest", "Elon", root, "I contain all of Elon's plans, so unlucky that my data is encrypted.");
+	home->AddEntity(guestUser);
 	Npc* os = new Npc("OS", "The one who rules this game", root, "You are trapped in this machine forever! (Unless you have an exploit)");
-	root->AddEntity(root);
+	root->AddEntity(os);
 
 	// Item definitions
 	Item* cd = new Item("cd", "allows you to change directories"); // Allows to move when used
 	Item* passwordFile = new Item("password.txt", "Super secret password: 1234"); // Gives the password required to enter home
 	Item* sudo = new Item("sudo", "grants admin permissions"); // Unlocks door to root
 	Item* forkBomb = new Item("forkbomb", ":(){ :|:& };:"); // Wins the game when used and location is root
-	Item* animePicture = new Item("anime picture", "picture of your faviourite anime character"); // Useless
+	Item* animePicture = new Item("picture", "picture of your faviourite anime character"); // Useless
 	Item* mixtape = new Item("mixtape", "your newest mixtape, its fire (available on soundcloud)"); // Useless
 
 	// Locate Items
@@ -99,42 +105,49 @@ vector<string> World::ParseActionString(string actionString) {
 }
 
 void World::ProcessAction(const vector<string>& tokens) {
-	string baseAction = tokens.front();
-	string actionTarget = "";
-	if (tokens.size() > 1)
-		actionTarget = tokens.at(1);
+	if (tokens.size() > 0) {
+		string baseAction = tokens.front();
+		string actionTarget = "";
+		if (tokens.size() > 1)
+			actionTarget = tokens.at(1);
 
-	if (baseAction == ACTION_HELP)
-		ShowActions();
-	else if (baseAction == ACTION_GO)
-		player->Go(actionTarget);
-	else if (baseAction == ACTION_UNLOCK)
-		player->Unlock(actionTarget);
-	else if (baseAction == ACTION_GRAB)
-		player->Grab(actionTarget);
-	else if (baseAction == ACTION_DROP)
-		player->Drop(actionTarget);
-	else if (baseAction == ACTION_TALK)
-		player->Talk(actionTarget);
-	else if (baseAction == ACTION_INSPECT)
-		if (actionTarget != "")
-			player->Inspect(actionTarget);
-		else
-			player->DescribeCurrentRoom();
-	else if (baseAction == ACTION_ITEMS)
-		player->ShowItems();
-	else if (baseAction == ACTION_USE)
+		if (baseAction == ACTION_HELP)
+			ShowActions();
+		else if (baseAction == ACTION_GO)
+			player->Go(actionTarget);
+		else if (baseAction == ACTION_UNLOCK)
+			player->Unlock(actionTarget);
+		else if (baseAction == ACTION_GRAB)
+			player->Grab(actionTarget);
+		else if (baseAction == ACTION_DROP)
+			player->Drop(actionTarget);
+		else if (baseAction == ACTION_TALK)
+			player->Talk(actionTarget);
+		else if (baseAction == ACTION_INSPECT)
+			if (actionTarget != "")
+				player->Inspect(actionTarget);
+			else
+				player->DescribeCurrentRoom();
+		else if (baseAction == ACTION_ITEMS)
+			player->ShowItems();
+		else if (baseAction == ACTION_USE)
 			player->UseItem(actionTarget);
-	else if (baseAction == ACTION_BREATHE)
-		player->Breathe();
-	else if (baseAction == ACTION_EXIST)
-		player->Go(actionTarget);
-	else if (baseAction == ACTION_SURRENDER) {
+		else if (baseAction == ACTION_BREATHE)
+			player->Breathe();
+		else if (baseAction == ACTION_EXIST)
+			player->Go(actionTarget);
+		else if (baseAction == ACTION_SURRENDER) {
+			gameOver = true;
+			cout << "You have forfeited, better luck next time <3" << endl;
+		}
+		else
+			cout << "Could not parse action, try again" << endl;
+	}
+}
+
+void World::ProcessWinCondition() {
+	if (player->GetLocation() == nullptr)
 		gameOver = true;
-		cout << "You have forfeited, better luck next time <3" << endl;
-	}		
-	else
-		cout << "Could not parse action, try again" << endl;
 }
 
 string World::CommonDescription(string dirName, string extraDescription) {
