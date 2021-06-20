@@ -20,17 +20,17 @@
 // Game Control Actions
 #define ACTION_SURRENDER "surrender"
 
+// Directions
+#define DIR_NORTH "north"
+#define DIR_EAST "east"
+#define DIR_SOUTH "south"
+#define DIR_WEST "west"
+
 enum class Direction
 {
 	NORTH,
 	EAST,
 	SOUTH,
 	WEST
-};
-
-enum class CreatureType
-{
-	NPC,
-	PLAYER
 };
 

@@ -3,6 +3,12 @@
 #include "Entity.h"
 #include "Room.h"
 
+enum class CreatureType
+{
+	NPC,
+	PLAYER
+};
+
 using namespace std;
 
 class Creature :

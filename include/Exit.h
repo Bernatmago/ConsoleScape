@@ -14,7 +14,7 @@ public:
 	Room* GetLocation() const;
 	Room* GetDestination() const;
 
-	bool& Locked();
+	bool Locked() const;
 
 private:
 	Direction direction;

@@ -27,7 +27,8 @@ public:
 
 	void AddEntity(Entity* entity);
 	void RemoveEntity(Entity* entity);
-	list<Entity*> GetContained(const string& name, const EntityType type) const;
+
+	list<Entity*> GetContained() const;	
 
 	virtual void PrintDescription();
 	virtual void ShowEntities(EntityType type);

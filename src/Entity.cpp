@@ -29,7 +29,7 @@ void Entity::AddEntity(Entity* entity) { contains.push_back(entity); }
 
 void Entity::RemoveEntity(Entity* entity) { contains.remove(entity); }
 
-list<Entity*> Entity::GetContained(const string& name, const EntityType type) const { return contains; }
+list<Entity*> Entity::GetContained() const { return contains; }
 
 void Entity::PrintDescription() { cout << description << endl; }
 

@@ -11,7 +11,7 @@ Exit::Exit(string name, Direction direction, Room* location, Room* destination, 
 Direction Exit::GetDirection() const { return direction; }
 Room* Exit::GetLocation() const { return location; }
 Room* Exit::GetDestination() const { return destination; }
-bool& Exit::Locked() { return locked; }
+bool Exit::Locked() const { return locked; }
 
 string Exit::ExitDescription(Room* destination) {
 	if (destination != nullptr)
