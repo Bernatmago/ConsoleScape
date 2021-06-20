@@ -20,7 +20,7 @@ World::World(string playerName)
 	Room* home = new Room("/home", CommonDescription("home", "other users data"));
 	entities.push_back(home);
 	// Fourth Room
-	Room* root = new Room("?", CommonDescription("?", "powerful commands"));
+	Room* root = new Room("root", CommonDescription("root", "powerful commands"));
 	entities.push_back(root);
 
 	// Room connections (unlocked by default)
@@ -44,14 +44,10 @@ World::World(string playerName)
 	Exit* exitHU = new Exit(playerName, Direction::SOUTH, home, user);
 	home->AddEntity(exitHU);
 
-	Exit* exitHR = new Exit("root", Direction::NORTH, home, root);
+	Exit* exitHR = new Exit("root", Direction::NORTH, home, root, true);
 	home->AddEntity(exitHR);
-	Exit* exitRH = new Exit("home", Direction::SOUTH, root, home);
+	Exit* exitRH = new Exit("login", Direction::SOUTH, root, home);
 	root->AddEntity(exitRH);
-
-	// Escape exit
-	Exit* end = new Exit("Strange mirror", Direction::WEST, root, nullptr, true);
-	root->AddEntity(end);
 
 	// Npc definitions
 	Npc* cortana = new Npc("Cortana", "Your personal assistant", desktop, "How may i help you, " + playerName + "?");
@@ -112,6 +108,8 @@ void World::ProcessAction(const vector<string>& tokens) {
 		ShowActions();
 	else if (baseAction == ACTION_GO)
 		player->Go(actionTarget);
+	else if (baseAction == ACTION_UNLOCK)
+		player->Unlock(actionTarget);
 	else if (baseAction == ACTION_GRAB)
 		player->Grab(actionTarget);
 	else if (baseAction == ACTION_DROP)
@@ -146,12 +144,14 @@ string World::CommonDescription(string dirName, string extraDescription) {
 void World::ShowActions() {
 	cout << "Commands:" << endl;
 	// Gameplay Actions
-	cout << "- " << ACTION_GO << ":" << endl;
-	cout << "- " << ACTION_GRAB << ":" << endl;
-	cout << "- " << ACTION_DROP << ":" << endl;
-	cout << "- " << ACTION_TALK << ":" << endl;
-	cout << "- " << ACTION_INSPECT << ":" << endl;
-	cout << "- " << ACTION_ITEMS << ":" << endl;
+	cout << "- " << ACTION_GO << " <direction>" << endl;
+	cout << "- " << ACTION_GRAB << " <item>" << endl;
+	cout << "- " << ACTION_DROP << " <item>" << endl;
+	cout << "- " << ACTION_TALK << " <npc>" << endl;
+	cout << "- " << ACTION_INSPECT << " <target> (no target means inspect room)" << endl;
+	cout << "- " << ACTION_ITEMS << endl;
+	cout << "- " << ACTION_UNLOCK << " <direction>" << endl;
+
 	
 	// Item actions
 	cout << "- " << ACTION_USE<< " <item>:" << endl;

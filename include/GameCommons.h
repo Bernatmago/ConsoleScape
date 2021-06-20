@@ -8,6 +8,7 @@
 #define ACTION_TALK "talk"
 #define ACTION_INSPECT "inspect"
 #define ACTION_ITEMS "items"
+#define ACTION_UNLOCK "unlock"
 
 // Item actions
 #define ACTION_USE "use"

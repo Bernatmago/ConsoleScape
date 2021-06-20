@@ -69,6 +69,11 @@ void Player::Drop(const string& itemName) {
 		cout << "You dont have this item" << endl;
 }
 void Player::Talk(const string& entityName) {
+	Npc* npc = GetEntityFromTarget<Npc>(entityName, this, EntityType::CREATURE);
+	if (npc != nullptr)
+		npc->PrintResponse();
+	else
+		cout << "There is no npc with this name" << endl;
 }
 
 void Player::Inspect(const string& entityName) {
@@ -103,11 +108,52 @@ void Player::UseItem(const string& itemName) {
 			cout << "[WARNING] Admin permissions have been granted, proceed with caution!" << endl;
 			MakeAdmin();
 		}
+		if (itemName == "forkbomb") {
+			if (location->GetName() == "root") {
+				cout << "System destruction initialized, you have won the game!" << endl;
+			}
+			else
+				cout << "You need to be near the os for this exploit to take effect" << endl;
+		}
 		else
 			cout << "This item has no effect maybe you can inspect it to gain useful (or not) information" << endl;
 	}
 	else
 		cout << "You dont have this item" << endl;
+}
+
+void Player::Unlock(const string& directionString) {
+	Direction* direction = ParseDirection(directionString);
+	Exit* exit = GetExitFromDirection(direction);
+	if (exit != nullptr) {
+		// Password doors
+		if (exit->GetName() == "home") {
+			string password = "";
+			cin >> password;
+			if (password == "1234") {
+				exit->Unlock();
+				cout << "Correct password introduced" << endl;
+			}
+			else
+				cout << "Wrong password, look for clues" << endl;
+			return;				
+		}
+		Item* key = GetEntityFromTarget<Item>("sudo", this, EntityType::ITEM);
+		
+		if (key != nullptr) {
+			if (exit->Locked()) {
+				exit->Unlock();
+				cout << "Access permission granted" << endl;
+			}
+			else
+				cout << "Exit already unlocked" << endl;
+		}
+		else
+			cout << "You dont have the admin key" << endl;		
+	}
+	else
+		cout << "Exit not found" << endl;
+
 }
 
 bool Player::CanMove() const { return canMove; }

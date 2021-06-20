@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include "GameCommons.h"
-#include "Creature.h"
+#include "Npc.h"
 #include "Exit.h"
 #include "Item.h"
 
@@ -24,6 +24,7 @@ public:
 	// Inspect specific entity
 	void Inspect(const string& entityName);
 	void UseItem(const string& itemName);
+	void Unlock(const string& directionString);
 
 	bool CanMove() const;
 	bool IsAdmin() const;
