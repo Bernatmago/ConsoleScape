@@ -167,9 +167,9 @@ void World::ShowActions() {
 
 	
 	// Item actions
-	cout << "- " << ACTION_USE<< " <item>:" << endl;
+	cout << "- " << ACTION_USE<< " <item>" << endl;
 
 
 	// Game Control Actions
-	cout << "- " << ACTION_SURRENDER << ":" << endl;
+	cout << "- " << ACTION_SURRENDER << endl;
 }
