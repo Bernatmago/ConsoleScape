@@ -16,8 +16,12 @@ This is a command based game, use the following commands to navigate.
 - **unlock <direction>** unlocks a door on the specified direction, they might need certain permissions or a password
 - **use <item>** uses an item, many of them have no effect
 - **surrender** leaves the game at any moment
+- a couple secret and useless comamands included
 
-## Spoiler: Game solution route:
+## Spoiler: Game map & solution route:
+  
+![Game Map](https://github.com/Bernatmago/ConsoleScape/blob/master/game_map.PNG)
+  
 ```
 Booting up system!
 Username: Bernat
