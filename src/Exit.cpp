@@ -9,9 +9,14 @@ Exit::Exit(string name, Direction direction, Room* location, Room* destination, 
 }
 
 Direction Exit::GetDirection() const { return direction; }
+
 Room* Exit::GetLocation() const { return location; }
+
 Room* Exit::GetDestination() const { return destination; }
+
 bool Exit::Locked() const { return locked; }
+
+void  Exit::Unlock() { locked = false; }
 
 string Exit::ExitDescription(Room* destination) {
 	if (destination != nullptr)

@@ -6,12 +6,30 @@ Player::Player(string name, string description, Room* location) : Creature(name,
 }
 
 void Player::ShowItems() {
-
+	cout << "Inventory:" << endl;
+	this->ShowEntities(EntityType::ITEM);
 }
+
 void Player::DescribeCurrentRoom() {
+	// Current Room
+	cout << "Current location: " << location->GetName() << endl;
+	location->PrintDescription();
 
+	// Room contents
+	cout << "Items:" << endl;
+	location->ShowEntities(EntityType::ITEM);
+
+	cout << "Npcs:" << endl;
+	location->ShowEntities(EntityType::CREATURE);
+
+	cout << "Doors: " << endl;
+	// How to show elegantly direction
+	list<Exit*> exits = GetEntityTypeFromTarget<Exit>((Entity*)location, EntityType::EXIT);
+	for (Exit* e : exits)
+		// Get direction string
+		cout << e->GetName() << ": (" << DirectionString(e->GetDirection()) << ")" << endl;
+	// location->ShowEntities(EntityType::EXIT);
 }
-
 
 void Player::Go(const string& directionString) {
 	Direction* direction = ParseDirection(directionString);
@@ -52,6 +70,7 @@ void Player::Drop(const string& itemName) {
 }
 void Player::Talk(const string& entityName) {
 }
+
 void Player::Inspect(const string& entityName) {
 	// Current Room
 	if (entityName == location->GetName())
@@ -74,8 +93,21 @@ void Player::Inspect(const string& entityName) {
 }
 
 void Player::UseItem(const string& itemName) {
-}
-void Player::UseItem(const string& itemName, const string& targetEntityName) {
+	Item* item = GetEntityFromTarget<Item>(itemName, this, EntityType::ITEM);
+	if (item != nullptr) {
+		if (itemName == "cd") {
+			cout << "You have gained the ability of changing directories!" << endl;
+			MakeMoveable();
+		}			
+		if (itemName == "sudo") {
+			cout << "[WARNING] Admin permissions have been granted, proceed with caution!" << endl;
+			MakeAdmin();
+		}
+		else
+			cout << "This item has no effect maybe you can inspect it to gain useful (or not) information" << endl;
+	}
+	else
+		cout << "You dont have this item" << endl;
 }
 
 bool Player::CanMove() const { return canMove; }
@@ -100,6 +132,19 @@ Direction* Player::ParseDirection(const string& directionString) {
 	if (directionString == DIR_WEST)
 		return new Direction(Direction::WEST);
 	return nullptr;
+}
+
+string Player::DirectionString(Direction direction) {
+	if (direction == Direction::NORTH)
+		return DIR_NORTH;
+	if (direction == Direction::EAST)
+		return DIR_EAST;
+	if (direction == Direction::SOUTH)
+		return DIR_SOUTH;
+	if (direction == Direction::WEST)
+		return DIR_WEST;
+	else
+		return "Unknown Dir";
 }
 
 template <class T>

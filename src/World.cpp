@@ -24,29 +24,29 @@ World::World(string playerName)
 	entities.push_back(root);
 
 	// Room connections (unlocked by default)
-	Exit* exitDU = new Exit("cd ./" + playerName, Direction::NORTH, desktop, user);
+	Exit* exitDU = new Exit(playerName, Direction::NORTH, desktop, user);
 	desktop->AddEntity(exitDU);
-	Exit* exitUD = new Exit("cd ./desktop", Direction::SOUTH, user, desktop);
+	Exit* exitUD = new Exit("desktop", Direction::SOUTH, user, desktop);
 	user->AddEntity(exitUD);
 
-	Exit* exitUP = new Exit("cd ./pictures", Direction::WEST, user, pictures);
+	Exit* exitUP = new Exit("pictures", Direction::WEST, user, pictures);
 	user->AddEntity(exitUP);
-	Exit* exitPU = new Exit("cd ./" + playerName, Direction::EAST, pictures, user);
+	Exit* exitPU = new Exit(playerName, Direction::EAST, pictures, user);
 	pictures->AddEntity(exitPU);
 
-	Exit* exitUM = new Exit("cd ./music", Direction::EAST, user, music);
+	Exit* exitUM = new Exit("music", Direction::EAST, user, music);
 	user->AddEntity(exitUM);
-	Exit* exitMU = new Exit("cd ./" + playerName, Direction::WEST, music, user);
+	Exit* exitMU = new Exit(playerName, Direction::WEST, music, user);
 	music->AddEntity(exitMU);
 
-	Exit* exitUH = new Exit("cd ./home", Direction::NORTH, user, home);
+	Exit* exitUH = new Exit("home", Direction::NORTH, user, home);
 	user->AddEntity(exitUH);
-	Exit* exitHU = new Exit("cd ./" + playerName, Direction::SOUTH, home, user);
+	Exit* exitHU = new Exit(playerName, Direction::SOUTH, home, user);
 	home->AddEntity(exitHU);
 
-	Exit* exitHR = new Exit("cd ./root", Direction::NORTH, home, root);
+	Exit* exitHR = new Exit("root", Direction::NORTH, home, root);
 	home->AddEntity(exitHR);
-	Exit* exitRH = new Exit("cd ./" + playerName, Direction::SOUTH, root, home);
+	Exit* exitRH = new Exit("home", Direction::SOUTH, root, home);
 	root->AddEntity(exitRH);
 
 	// Escape exit
@@ -60,14 +60,14 @@ World::World(string playerName)
 	desktop->AddEntity(zork);
 	Npc* unfinishedProject = new Npc("Unfinished project", "It has some python 2.7 code", user, "I have merge conflicts, please fix them...");
 	user->AddEntity(unfinishedProject);
-	Npc* os = new Npc("OS", "The one who rules this game", home, "You shall not pass! (Unless you have the one command to rule them all)");
-	root->AddEntity(os);
+	Npc* os = new Npc("OS", "The one who rules this game", root, "You are trapped in this machine forever! (Unless you have an exploit)");
+	root->AddEntity(root);
 
 	// Item definitions
-	Item* cd = new Item("cd command", "allows you to change directories"); // Allows to move when used
+	Item* cd = new Item("cd", "allows you to change directories"); // Allows to move when used
 	Item* passwordFile = new Item("password.txt", "Super secret password: 1234"); // Gives the password required to enter home
-	Item* sudo = new Item("sudo command", "grants admin permissions"); // Allows to access root
-	Item* forkBomb = new Item(":(){ :|:& };:", "bash fork bomb"); // Wins the game on root
+	Item* sudo = new Item("sudo", "grants admin permissions"); // Unlocks door to root
+	Item* forkBomb = new Item("forkbomb", ":(){ :|:& };:"); // Wins the game when used and location is root
 	Item* animePicture = new Item("anime picture", "picture of your faviourite anime character"); // Useless
 	Item* mixtape = new Item("mixtape", "your newest mixtape, its fire (available on soundcloud)"); // Useless
 
@@ -119,17 +119,14 @@ void World::ProcessAction(const vector<string>& tokens) {
 	else if (baseAction == ACTION_TALK)
 		player->Talk(actionTarget);
 	else if (baseAction == ACTION_INSPECT)
-		player->Inspect(actionTarget);
+		if (actionTarget != "")
+			player->Inspect(actionTarget);
+		else
+			player->DescribeCurrentRoom();
 	else if (baseAction == ACTION_ITEMS)
 		player->ShowItems();
-	else if (baseAction == ACTION_USE) {
-		if (tokens.size() > 3 && tokens.at(2) == ACTION_ITEM_TARGET)
-			// Use item on target
-			player->UseItem(actionTarget, tokens.at(3));
-		else
-			// Use item no target
+	else if (baseAction == ACTION_USE)
 			player->UseItem(actionTarget);
-	}
 	else if (baseAction == ACTION_BREATHE)
 		player->Breathe();
 	else if (baseAction == ACTION_EXIST)
@@ -158,7 +155,6 @@ void World::ShowActions() {
 	
 	// Item actions
 	cout << "- " << ACTION_USE<< " <item>:" << endl;
-	cout << "- " << ACTION_USE << " <item> " ACTION_ITEM_TARGET " <target>:" << endl;
 
 
 	// Game Control Actions

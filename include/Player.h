@@ -21,9 +21,9 @@ public:
 	void Grab(const string& itemName);
 	void Drop(const string& itemName);
 	void Talk(const string& entityName);
+	// Inspect specific entity
 	void Inspect(const string& entityName);
 	void UseItem(const string& itemName);
-	void UseItem(const string& itemName, const string& targetEntityName);
 
 	bool CanMove() const;
 	bool IsAdmin() const;
@@ -38,6 +38,7 @@ protected:
 	void MakeAdmin();
 	void MakeMoveable();
 	Direction* ParseDirection(const string& directionString);
+	string DirectionString(Direction direction);
 	template <class T>
 	list<T*> GetEntityTypeFromTarget(const Entity* target, const EntityType type) const;
 	template <class T>

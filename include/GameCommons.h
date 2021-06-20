@@ -10,8 +10,7 @@
 #define ACTION_ITEMS "items"
 
 // Item actions
-#define ACTION_USE "use" 
-#define ACTION_ITEM_TARGET "on"
+#define ACTION_USE "use"
 
 // Gimmicks (Not shown on help)
 #define ACTION_BREATHE "breathe"
