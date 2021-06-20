@@ -7,15 +7,15 @@ Text based game in which you try to escape the console you are playing it in
 This is a command based game, use the following commands to navigate.
 
 ### Commands:
-- go <direction> goes to a specific direction.
-- grab <item> grabs an item.
-- drop <item> drops an item.
-- talk <npc> talks to a npc (they give tips or funny responses).
-- inspect <target> (no target means inspect room) inspect anything, some items might have useful descriptions.
-- items shows your inventory
-- unlock <direction> unlocks a door on the specified direction, they might need certain permissions or a password
-- use <item> uses an item, many of them have no effect
-- surrender leaves the game at any moment
+- **go <direction>** goes to a specific direction.
+- **grab <item>** grabs an item.
+- **drop <item>** drops an item.
+- **talk <npc>** talks to a npc (they give tips or funny responses).
+- **inspect <target>** (no target means inspect room) inspect anything, some items might have useful descriptions.
+- **items** shows your inventory
+- **unlock <direction>** unlocks a door on the specified direction, they might need certain permissions or a password
+- **use <item>** uses an item, many of them have no effect
+- **surrender** leaves the game at any moment
 
 ## Spoiler: Game solution route:
 ```
