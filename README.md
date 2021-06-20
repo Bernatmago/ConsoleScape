@@ -5,6 +5,7 @@ Text based game in which you try to escape the console you are playing it in
 
 ## How to play:
 This is a command based game, use the following commands to navigate.
+**Note:** all words are case sensitive.
 
 ### Commands:
 - **go <direction>** goes to a specific direction.
