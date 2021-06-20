@@ -135,7 +135,7 @@ void World::ProcessAction(const vector<string>& tokens) {
 		else if (baseAction == ACTION_BREATHE)
 			player->Breathe();
 		else if (baseAction == ACTION_EXIST)
-			player->Go(actionTarget);
+			player->Exist();
 		else if (baseAction == ACTION_SURRENDER) {
 			gameOver = true;
 			cout << "You have forfeited, better luck next time <3" << endl;
